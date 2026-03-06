@@ -1,105 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
+<head>
     <meta charset="UTF-8">
-    <title>Untitled</title>
-    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jovialsub Global | B2B Portal</title>
+    <style>
+        /* Professional Dark Theme CSS */
+        :root { --accent: #2ecc71; --dark: #121212; --card: #1e1e1e; --text: #ffffff; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: var(--text); margin: 0; padding-bottom: 50px; }
+        header { background: #000; padding: 20px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid var(--accent); text-align: center; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--accent); margin-bottom: 15px; display: block; }
+        
+        /* Search & Filter Styling */
+        .search-area { display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin: 0 auto; }
+        input { background: #222; border: 1px solid #444; color: #fff; padding: 12px; border-radius: 8px; font-size: 16px; outline: none; }
+        input:focus { border-color: var(--accent); }
+        .budget-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        /* Layout Sections */
+        .section { background: var(--card); margin: 15px; padding: 20px; border-radius: 12px; border: 1px solid #333; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; }
+        
+        /* Product Cards */
+        .card { background: var(--card); padding: 20px; border-radius: 15px; border-bottom: 4px solid var(--accent); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(46, 204, 113, 0.2); }
+        
+        /* Buttons */
+        button { background: var(--accent); color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+        .admin-btn { background: #333; color: #fff; width: auto; font-size: 11px; padding: 5px 10px; margin-bottom: 10px; opacity: 0.7; }
+        .reseller-btn { background: #3498db; color: white; }
+    </style>
+</head>
+<body>
 
-  </head>
-    
-  <body>
-  <div class="quantum-layer"></div>
-
-<div class="container" id="main-app">
-
-    <div class="brand-header">
-
-        <div class="brand-logo">J</div>
-
-        <div class="system-status">
-
-            <span class="pulse-dot"></span> GLOBAL EXPORT TERMINAL ACTIVE
-
+    <header>
+        <button class="admin-btn" onclick="document.getElementById('admin').style.display='block'">Admin Login</button>
+        <span class="logo">JOVIALSUB GLOBAL</span>
+        <div class="search-area">
+            <input type="text" id="searchInput" placeholder="Search (e.g. Doctor, Pen, Diary)..." onkeyup="runFilter()">
+            <div class="budget-row">
+                <input type="number" id="qtyInput" placeholder="Qty Needed" oninput="runFilter()">
+                <input type="number" id="budgetInput" placeholder="Total Budget (₹)" oninput="runFilter()">
+            </div>
         </div>
+    </header>
 
+    <div id="admin" class="section" style="display:none;">
+        <h3>Admin: Manage Inventory</h3>
+        <p>Upload New Vendor PDF Catalogue</p>
+        <input type="file"> 
+        <button onclick="this.parentElement.style.display='none'">Save & Publish</button>
     </div>
 
-    <h1>Jovialsub Global</h1>
-
-    <p class="tagline">Premium Corporate Gifting & Export Solutions</p>
-
-    <div class="product-grid">
-
-        <div class="product-card" onclick="selectProduct('Corporate Gifts', '₹499', '50 Pcs')">
-
-            <div class="product-img img-gift"></div>
-
-            <p>Corporate Gifts</p>
-
+    <div class="section">
+        <h3>Reseller Branding Tool</h3>
+        <p style="font-size: 12px; color: #aaa;">Upload your logo to create branded PDFs for your clients.</p>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <input type="file" id="resellerLogo" accept="image/*">
+            <input type="number" id="margin" placeholder="Add Margin % (e.g. 15)" value="10">
+            <button class="reseller-btn">Generate Branded PDF</button>
         </div>
-
-        <div class="product-card" onclick="selectProduct('Personalized Items', '₹199', '1 Pc')">
-
-            <div class="product-img img-personal"></div>
-
-            <p>Personalized</p>
-
-        </div>
-
-        <div class="product-card" onclick="selectProduct('Luxury Hampers', '₹1500', '10 Pcs')">
-
-            <div class="product-img img-hamper"></div>
-
-            <p>Luxury Hampers</p>
-
-        </div>
-
-        <div class="product-card" onclick="selectProduct('Custom Printing', '₹10', '500 Pcs')">
-
-            <div class="product-img img-printing"></div>
-
-            <p>Custom Print</p>
-
-        </div>
-
     </div>
 
-    <div class="system-terminal" id="display">
+    <div id="productGrid" class="grid"></div>
 
-        >> SELECT PRODUCT CATEGORY...<br>
+    <script>
+        // Data Structure (Supports up to 5000+ items)
+        const inventory = [
+            { sku: "JS-D1", name: "Premium Doctor Pen Set", tags: "doctor, medical, pen", price: 150 },
+            { sku: "JS-C1", name: "Executive Leather Diary", tags: "office, corporate, notebook", price: 300 },
+            { sku: "JS-L1", name: "Luxury Gift Hamper", tags: "luxury, diwali, gift", price: 1500 },
+            { sku: "JS-D2", name: "Doctor Stethoscope Kit", tags: "doctor, medical, equipment", price: 2500 },
+            { sku: "JS-O1", name: "Metal Desk Organizer", tags: "office, desk, gift", price: 450 }
+        ];
 
-        >> GLOBAL EXPORT PRICING LOADED.<br>
+        function runFilter() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const qty = parseInt(document.getElementById('qtyInput').value) || 1;
+            const maxBudget = parseInt(document.getElementById('budgetInput').value) || 9999999;
+            const grid = document.getElementById('productGrid');
+            
+            grid.innerHTML = "";
 
-        >> SYSTEM: READY FOR EXPORT.
+            inventory.forEach(item => {
+                const totalItemCost = item.price * qty;
+                const matchesSearch = item.tags.includes(search) || item.name.toLowerCase().includes(search);
+                
+                // Requirement: Show only if search matches AND total cost fits budget
+                if (matchesSearch && totalItemCost <= maxBudget) {
+                    grid.innerHTML += `
+                        <div class="card">
+                            <h3 style="margin:0 0 10px 0;">${item.name}</h3>
+                            <p style="color:#888; font-size:12px; margin:5px 0;">SKU: ${item.sku}</p>
+                            <p style="color:#2ecc71; font-size:1.4rem; margin:10px 0;">₹${item.price} <span style="font-size:12px; color:#aaa">/pc</span></p>
+                            <p style="border-top:1px solid #333; padding-top:10px;">Total for ${qty} pcs: <b>₹${totalItemCost}</b></p>
+                            <button onclick="sendWA('${item.name}', '${qty}', '${item.sku}')">WhatsApp Inquiry</button>
+                        </div>`;
+                }
+            });
+        }
 
-    </div>
+        function sendWA(name, qty, sku) {
+            const msg = `Hi Jovialsub Global,\nI am interested in:\nProduct: ${name}\nSKU: ${sku}\nQuantity: ${qty}\nPlease share best quote.`;
+            window.open(`https://wa.me/918200313100?text=${encodeURIComponent(msg)}`);
+        }
 
-    <div class="input-row">
-
-        <input type="number" id="qty-input" placeholder="Enter Quantity Needed...">
-
-    </div>
-
-    <button class="whatsapp-btn" onclick="sendToWhatsApp()">
-
-        <span class="btn-icon">💬</span> GET QUOTE ON WHATSAPP
-
-    </button>
-
-    <div class="footer">
-
-        <div class="copyright">JOVIALSUB.COM | OFFICIAL EXPORT PORTAL</div>
-
-        <span onclick="clearData()" class="purge-btn">Reset Terminal</span>
-
-    </div>
-
-</div>
-
-<audio id="click-sound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
-    <script  src="./script.js"></script>
-
-  </body>
-  
+        // Initial Load
+        runFilter();
+    </script>
+</body>
 </html>
