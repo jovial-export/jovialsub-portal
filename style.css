@@ -1,0 +1,99 @@
+:root {
+
+    --brand-blue: #0ea5e9;
+
+    --neon-green: #10b981;
+
+    --bg-dark: #020617;
+
+}
+
+body {
+
+    background: var(--bg-dark);
+
+    color: #f1f5f9;
+
+    font-family: 'Segoe UI', Roboto, sans-serif;
+
+    display: flex; justify-content: center; align-items: center;
+
+    min-height: 100vh; margin: 0; overflow: hidden;
+
+}
+
+.container {
+
+    background: rgba(15, 23, 42, 0.8);
+
+    backdrop-filter: blur(25px);
+
+    border: 1px solid rgba(14, 165, 233, 0.3);
+
+    padding: 35px; border-radius: 40px;
+
+    width: 360px; box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+
+}
+
+.product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+
+.product-card {
+
+    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 20px; padding: 12px; transition: 0.4s; cursor: pointer;
+
+}
+
+.product-card:hover { 
+
+    background: rgba(14, 165, 233, 0.1); 
+
+    border-color: var(--brand-blue);
+
+    transform: translateY(-8px);
+
+}
+
+.product-img { height: 70px; border-radius: 12px; margin-bottom: 10px; }
+
+.img-gift { background: linear-gradient(45deg, #0284c7, #38bdf8); }
+
+.img-personal { background: linear-gradient(45deg, #7c3aed, #a78bfa); }
+
+.img-hamper { background: linear-gradient(45deg, #ea580c, #fb923c); }
+
+.img-printing { background: linear-gradient(45deg, #059669, #34d399); }
+
+.system-terminal {
+
+    background: #000; border-radius: 15px; padding: 18px;
+
+    font-family: 'Consolas', monospace; font-size: 0.75rem;
+
+    color: var(--neon-green); margin-bottom: 20px;
+
+    border-left: 4px solid var(--brand-blue);
+
+}
+
+input {
+
+    width: 90%; padding: 15px; border-radius: 15px; border: 1px solid #334155;
+
+    background: rgba(0,0,0,0.5); color: white; margin-bottom: 15px; text-align: center;
+
+}
+
+.whatsapp-btn {
+
+    background: #25d366; color: white; border: none;
+
+    padding: 18px; border-radius: 15px; font-weight: 800;
+
+    width: 100%; cursor: pointer; transition: 0.3s;
+
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+
+}

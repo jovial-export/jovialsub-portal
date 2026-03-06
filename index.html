@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <div class="quantum-layer"></div>
+
+<div class="container" id="main-app">
+
+    <div class="brand-header">
+
+        <div class="brand-logo">J</div>
+
+        <div class="system-status">
+
+            <span class="pulse-dot"></span> GLOBAL EXPORT TERMINAL ACTIVE
+
+        </div>
+
+    </div>
+
+    <h1>Jovialsub Global</h1>
+
+    <p class="tagline">Premium Corporate Gifting & Export Solutions</p>
+
+    <div class="product-grid">
+
+        <div class="product-card" onclick="selectProduct('Corporate Gifts', '₹499', '50 Pcs')">
+
+            <div class="product-img img-gift"></div>
+
+            <p>Corporate Gifts</p>
+
+        </div>
+
+        <div class="product-card" onclick="selectProduct('Personalized Items', '₹199', '1 Pc')">
+
+            <div class="product-img img-personal"></div>
+
+            <p>Personalized</p>
+
+        </div>
+
+        <div class="product-card" onclick="selectProduct('Luxury Hampers', '₹1500', '10 Pcs')">
+
+            <div class="product-img img-hamper"></div>
+
+            <p>Luxury Hampers</p>
+
+        </div>
+
+        <div class="product-card" onclick="selectProduct('Custom Printing', '₹10', '500 Pcs')">
+
+            <div class="product-img img-printing"></div>
+
+            <p>Custom Print</p>
+
+        </div>
+
+    </div>
+
+    <div class="system-terminal" id="display">
+
+        >> SELECT PRODUCT CATEGORY...<br>
+
+        >> GLOBAL EXPORT PRICING LOADED.<br>
+
+        >> SYSTEM: READY FOR EXPORT.
+
+    </div>
+
+    <div class="input-row">
+
+        <input type="number" id="qty-input" placeholder="Enter Quantity Needed...">
+
+    </div>
+
+    <button class="whatsapp-btn" onclick="sendToWhatsApp()">
+
+        <span class="btn-icon">💬</span> GET QUOTE ON WHATSAPP
+
+    </button>
+
+    <div class="footer">
+
+        <div class="copyright">JOVIALSUB.COM | OFFICIAL EXPORT PORTAL</div>
+
+        <span onclick="clearData()" class="purge-btn">Reset Terminal</span>
+
+    </div>
+
+</div>
+
+<audio id="click-sound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
